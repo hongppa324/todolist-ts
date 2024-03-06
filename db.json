@@ -1,0 +1,22 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "타입스크립트 공부하기",
+      "content": "cookbook 영상 3회 반복",
+      "isDone": true
+    },
+    {
+      "id": 2,
+      "title": "리액트 쿼리 공부하기",
+      "content": "개념 정리하기",
+      "isDone": true
+    },
+    {
+      "id": 3,
+      "title": "RTK 공부하기",
+      "content": "개념 정리하기",
+      "isDone": false
+    }
+  ]
+}

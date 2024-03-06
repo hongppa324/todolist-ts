@@ -1,6 +1,9 @@
 import shortid from "shortid";
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import axios from "axios";
+
+const apiUrl = "http://localhost:3001";
 
 // initial state
 export type Todo = {
@@ -12,32 +15,38 @@ export type Todo = {
 
 export type Todos = Todo[];
 
-const initialState: Todo[] = [
-  {
-    id: shortid.generate(),
-    title: "타입스크립트 공부하기",
-    content: "cookbook 영상 3회 반복",
-    isDone: true,
-  },
-  {
-    id: shortid.generate(),
-    title: "리액트 쿼리 공부하기",
-    content: "개념 정리하기",
-    isDone: true,
-  },
-  {
-    id: shortid.generate(),
-    title: "RTK 공부하기",
-    content: "개념정리하기",
-    isDone: false,
-  },
-];
+const initialState: Todo[] = [];
+
+// 비동기함수
+export const fetchTodos = () => async (dispatch) => {
+  try {
+    const response = await axios.get(`${apiUrl}/todos`);
+    dispatch(setTodos(response.data));
+  } catch (error) {
+    console.error("데이터를 불러오지 못 했습니다", error);
+  }
+};
+
+export const addTodos = (newTodo: Omit<Todo, "id">) => async (dispatch) => {
+  try {
+    const response = await axios.post(apiUrl, {
+      ...newTodo,
+      id: shortid.generate(),
+    });
+    dispatch(addTodo(response.data));
+  } catch (error) {
+    console.log("목록을 추가하는 데에 오류가 생겼습니다", error);
+  }
+};
 
 // createSlice
 const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
+    setTodos: (state, action) => {
+      return action.payload;
+    },
     addTodo: (state, action: PayloadAction<Omit<Todo, "id">>) => {
       state.push({ id: shortid.generate(), ...action.payload });
     },
@@ -56,5 +65,5 @@ const todosSlice = createSlice({
   },
 });
 
-export const { addTodo, removeTodo, switchTodo } = todosSlice.actions;
+export const { setTodos, addTodo, removeTodo, switchTodo } = todosSlice.actions;
 export default todosSlice.reducer;
