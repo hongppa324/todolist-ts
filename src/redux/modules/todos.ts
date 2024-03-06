@@ -11,21 +11,21 @@ type TodosAction =
   | ReturnType<typeof removeTodo>
   | ReturnType<typeof switchTodo>;
 
-export const addTodo = (payload: any) => {
+export const addTodo = (payload: Todo) => {
   return {
     type: ADD_TODO,
     payload,
   };
 };
 
-export const removeTodo = (payload: any) => {
+export const removeTodo = (payload: string) => {
   return {
     type: REMOVE_TODO,
     payload,
   };
 };
 
-export const switchTodo = (payload: any) => {
+export const switchTodo = (payload: string) => {
   return {
     type: SWITCH_TODO,
     payload,
