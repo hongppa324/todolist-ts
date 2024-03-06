@@ -1,5 +1,6 @@
 import shortid from "shortid";
 import { createSlice } from "@reduxjs/toolkit";
+import type { PayloadAction } from "@reduxjs/toolkit";
 
 // initial state
 export type Todo = {
@@ -37,50 +38,13 @@ const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    addTodo: (state, action) => {},
-  },
-});
-
-// action value
-const ADD_TODO = "ADD_TODO" as const;
-const REMOVE_TODO = "REMOVE_TODO" as const;
-const SWITCH_TODO = "SWITCH_TODO" as const;
-
-// action creator
-type TodosAction =
-  | ReturnType<typeof addTodo>
-  | ReturnType<typeof removeTodo>
-  | ReturnType<typeof switchTodo>;
-
-export const addTodo = (payload: any) => {
-  return {
-    type: ADD_TODO,
-    payload,
-  };
-};
-
-export const removeTodo = (payload: any) => {
-  return {
-    type: REMOVE_TODO,
-    payload,
-  };
-};
-
-export const switchTodo = (payload: any) => {
-  return {
-    type: SWITCH_TODO,
-    payload,
-  };
-};
-
-// reducers
-const todos = (state: Todos = initialState, action: TodosAction) => {
-  switch (action.type) {
-    case ADD_TODO:
-      return [...state, action.payload];
-    case REMOVE_TODO:
+    addTodo: (state, action: PayloadAction<Omit<Todo, "id">>) => {
+      state.push({ id: shortid.generate(), ...action.payload });
+    },
+    removeTodo: (state, action: PayloadAction<string>) => {
       return state.filter((item) => item.id !== action.payload);
-    case SWITCH_TODO:
+    },
+    switchTodo: (state, action: PayloadAction<string>) => {
       return state.map((item) => {
         if (item.id === action.payload) {
           return { ...item, isDone: !item.isDone };
@@ -88,10 +52,9 @@ const todos = (state: Todos = initialState, action: TodosAction) => {
           return item;
         }
       });
+    },
+  },
+});
 
-    default:
-      return state;
-  }
-};
-
-export default todos;
+export const { addTodo, removeTodo, switchTodo } = todosSlice.actions;
+export default todosSlice.reducer;
