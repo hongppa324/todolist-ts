@@ -3,22 +3,24 @@ import shortid from "shortid";
 import styled from "styled-components";
 import { addTodo } from "../../redux/modules/todos";
 import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/config/configStore";
+import LabeledInput from "../common/LabeledInput";
 
 export default function Input() {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state.todos);
+  const todos = useSelector((state: RootState) => state.todos);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
-  const titleChangeHandler = (event) => {
+  const titleChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
 
-  const contentChangeHandler = (event) => {
+  const contentChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setContent(event.target.value);
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!title || !content) {
       alert("제목과 내용을 입력해주세요!");
@@ -61,5 +63,4 @@ export default function Input() {
 }
 
 const StyledDiv = styled.div``;
-const LabeledInput = styled.input``;
 const StyledButton = styled.button``;

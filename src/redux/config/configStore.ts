@@ -1,6 +1,8 @@
 import { createStore, combineReducers } from "redux";
 import todos from "../modules/todos";
 
+export type RootState = ReturnType<typeof rootReducer>;
+
 // create rootReducer
 const rootReducer = combineReducers({
   todos,

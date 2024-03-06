@@ -1,9 +1,14 @@
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Todo from "../Todo/Todo";
+import { RootState } from "../../redux/config/configStore";
 
-export default function TodoList({ isActive }) {
-  const todos = useSelector((state) => state.todos);
+type Props = {
+  isActive: boolean;
+};
+
+export default function TodoList({ isActive }: Props) {
+  const todos = useSelector((state: RootState) => state.todos);
 
   return (
     <StyledDiv>

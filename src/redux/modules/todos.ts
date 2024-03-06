@@ -1,26 +1,31 @@
 import shortid from "shortid";
 
 // action value
-const ADD_TODO = "ADD_TODO";
-const REMOVE_TODO = "REMOVE_TODO";
-const SWITCH_TODO = "SWITCH_TODO";
+const ADD_TODO = "ADD_TODO" as const;
+const REMOVE_TODO = "REMOVE_TODO" as const;
+const SWITCH_TODO = "SWITCH_TODO" as const;
 
 // action creator
-export const addTodo = (payload) => {
+type TodosAction =
+  | ReturnType<typeof addTodo>
+  | ReturnType<typeof removeTodo>
+  | ReturnType<typeof switchTodo>;
+
+export const addTodo = (payload: any) => {
   return {
     type: ADD_TODO,
     payload,
   };
 };
 
-export const removeTodo = (payload) => {
+export const removeTodo = (payload: any) => {
   return {
     type: REMOVE_TODO,
     payload,
   };
 };
 
-export const switchTodo = (payload) => {
+export const switchTodo = (payload: any) => {
   return {
     type: SWITCH_TODO,
     payload,
@@ -28,29 +33,38 @@ export const switchTodo = (payload) => {
 };
 
 // initial state
-const initialState = [
+export type Todo = {
+  id: string;
+  title: string;
+  content: string;
+  isDone: boolean;
+};
+
+export type Todos = Todo[];
+
+const initialState: Todo[] = [
   {
     id: shortid.generate(),
     title: "타입스크립트 공부하기",
-    contents: "cookbook 영상 3회 반복",
+    content: "cookbook 영상 3회 반복",
     isDone: true,
   },
   {
     id: shortid.generate(),
     title: "리액트 쿼리 공부하기",
-    contents: "개념 정리하기",
+    content: "개념 정리하기",
     isDone: true,
   },
   {
     id: shortid.generate(),
     title: "RTK 공부하기",
-    contents: "개념정리하기",
+    content: "개념정리하기",
     isDone: false,
   },
 ];
 
 // reducers
-const todos = (state = initialState, action) => {
+const todos = (state: Todos = initialState, action: TodosAction) => {
   switch (action.type) {
     case ADD_TODO:
       return [...state, action.payload];
