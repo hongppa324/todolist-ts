@@ -3,8 +3,8 @@ import styled from "styled-components";
 export default function Header() {
   return (
     <StyledHeader>
-      <StyledP>Nbcamp</StyledP>
       <StyledP>Todolist</StyledP>
+      <StyledP>TypeScript ver.</StyledP>
     </StyledHeader>
   );
 }
