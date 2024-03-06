@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { removeTodo, switchTodo } from "../../redux/modules/todos";
+import { removeTodo, switchTodo } from "../../redux/modules/todosSlice";
 import { ReactNode } from "react";
 
 type TodoType = {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import shortid from "shortid";
 import styled from "styled-components";
-import { addTodo } from "../../redux/modules/todos";
+import { addTodo } from "../../redux/modules/todosSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux/config/configStore";
 import LabeledInput from "../common/LabeledInput";
