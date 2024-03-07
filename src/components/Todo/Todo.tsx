@@ -1,24 +1,28 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { removeTodo, switchTodo } from "../../redux/modules/todosSlice";
-import { ReactNode } from "react";
-
-type TodoType = {
-  id: string;
-  title: string;
-  content: string;
-};
+import { Todo } from "../../types/global.d";
+import axios from "axios";
 
 type Props = {
-  todo: TodoType;
+  todo: Todo;
   isActive: boolean;
 };
 
 export default function Todo({ todo, isActive }: Props) {
   const dispatch = useDispatch();
 
-  const switchHandler = () => dispatch(switchTodo(todo.id));
-  const removeHandler = () => dispatch(removeTodo(todo.id));
+  const removeHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    await axios.delete(`http://localhost:3001/todos/${todo.id}`);
+    dispatch(removeTodo(todo.id));
+  };
+
+  const switchHandler = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    await axios.patch(`http://localhost:3001/todos/${todo.id}`);
+    dispatch(switchTodo(todo.id));
+  };
+
   return (
     <StyledDiv>
       <StyledTitle>{todo.title}</StyledTitle>

@@ -17,6 +17,12 @@
       "title": "RTK 공부하기",
       "content": "개념 정리하기",
       "isDone": false
+    },
+    {
+      "id": "EUNSxu9fQ",
+      "title": "TypeScript 과제",
+      "content": "TypeScript Level3",
+      "isDone": false
     }
   ]
 }

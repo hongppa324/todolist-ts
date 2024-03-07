@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Todo from "../Todo/Todo";
 import { RootState } from "../../redux/config/configStore";
+import { setTodos } from "../../redux/modules/todosSlice";
+import axios from "axios";
 
 type Props = {
   isActive: boolean;
@@ -9,6 +12,15 @@ type Props = {
 
 export default function TodoList({ isActive }: Props) {
   const todos = useSelector((state: RootState) => state.todos);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get("http://localhost:3001/todos");
+      dispatch(setTodos(response.data));
+    };
+    fetchData();
+  }, [dispatch]);
 
   return (
     <StyledDiv>
