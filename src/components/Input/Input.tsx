@@ -1,14 +1,13 @@
 import { useState } from "react";
 import shortid from "shortid";
 import styled from "styled-components";
-import { addTodo } from "../../redux/modules/todosSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../redux/config/configStore";
-import axios from "axios";
+import { __addTodo } from "../../redux/modules/todosSlice";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../redux/config/configStore";
 import LabeledInput from "../common/LabeledInput";
 
 export default function Input() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const todos = useSelector((state: RootState) => state.todos);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -33,9 +32,7 @@ export default function Input() {
       content,
       isDone: false,
     };
-    const { data } = await axios.post("http://localhost:3001/todos", newTodo);
-
-    dispatch(addTodo(data));
+    dispatch(__addTodo(newTodo));
     setTitle("");
     setContent("");
   };
@@ -57,7 +54,7 @@ export default function Input() {
           value={content}
           onChange={contentChangeHandler}
         />
-        <StyledButton type="submit">제출</StyledButton>
+        <StyledButton type="submit">추가하기</StyledButton>
       </form>
     </StyledDiv>
   );
