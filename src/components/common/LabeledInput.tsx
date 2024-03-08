@@ -28,5 +28,13 @@ export default function LabeledInput({
   );
 }
 
-const StyledInput = styled.input``;
-const StyledLabel = styled.label``;
+const StyledInput = styled.input`
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 10px;
+  padding-left: 10px;
+`;
+const StyledLabel = styled.label`
+  margin-right: 10px;
+  font-weight: 700;
+`;

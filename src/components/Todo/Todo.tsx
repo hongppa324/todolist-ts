@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { StyledDiv, StyledTitle, StyledContent, TodoButton } from "./styles";
 import { removeTodo, switchTodo } from "../../axios/api";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { Todo } from "../../types/global.d";
@@ -53,8 +53,3 @@ export default function Todo({ todo, isActive }: Props) {
     </StyledDiv>
   );
 }
-
-const StyledDiv = styled.div``;
-const StyledTitle = styled.p``;
-const StyledContent = styled.p``;
-const TodoButton = styled.button``;

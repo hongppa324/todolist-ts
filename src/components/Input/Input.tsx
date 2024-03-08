@@ -1,6 +1,6 @@
 import { useState } from "react";
 import shortid from "shortid";
-import styled from "styled-components";
+import { StyledDiv, StyledButton } from "./styles";
 import { addTodo } from "../../axios/api";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LabeledInput from "../common/LabeledInput";
@@ -50,14 +50,14 @@ export default function Input() {
       <form onSubmit={onSubmitHandler}>
         <LabeledInput
           id="title"
-          label="제목 : "
+          label="제목"
           placeholder="제목을 입력해주세요"
           value={title}
           onChange={titleChangeHandler}
         />
         <LabeledInput
           id="content"
-          label="내용 : "
+          label="내용"
           placeholder="내용을 입력해주세요"
           value={content}
           onChange={contentChangeHandler}
@@ -67,6 +67,3 @@ export default function Input() {
     </StyledDiv>
   );
 }
-
-const StyledDiv = styled.div``;
-const StyledButton = styled.button``;

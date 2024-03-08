@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { StyledDiv, StyledTodoListHeader, StyledTodoListBox } from "./styles";
 import Todo from "../Todo/Todo";
 import { useQuery } from "@tanstack/react-query";
 import { getTodos } from "../../axios/api";
@@ -36,7 +36,3 @@ export default function TodoList({ isActive }: Props) {
     </StyledDiv>
   );
 }
-
-const StyledDiv = styled.div``;
-const StyledTodoListHeader = styled.h3``;
-const StyledTodoListBox = styled.div``;

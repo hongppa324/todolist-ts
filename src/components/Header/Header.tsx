@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { StyledHeader, StyledP } from "./styles";
 
 export default function Header() {
   return (
@@ -8,6 +8,3 @@ export default function Header() {
     </StyledHeader>
   );
 }
-
-const StyledHeader = styled.div``;
-const StyledP = styled.p``;
