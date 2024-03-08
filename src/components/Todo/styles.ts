@@ -16,7 +16,7 @@ const StyledContent = styled.p`
   padding: 10px;
 `;
 const TodoButton = styled.button`
-  background-color: #b1a2ca;
+  background-color: black;
   color: white;
   width: 60px;
   height: 20px;
