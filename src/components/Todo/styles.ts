@@ -17,6 +17,7 @@ const StyledContent = styled.p`
 `;
 const TodoButton = styled.button`
   background-color: black;
+  margin: 5px;
   color: white;
   width: 60px;
   height: 20px;
