@@ -1,10 +1,7 @@
 import styled from "styled-components";
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import Todo from "../Todo/Todo";
-import { RootState } from "../../redux/config/configStore";
-import { __getTodos } from "../../redux/modules/todosSlice";
-import { useAppDispatch } from "../../redux/config/configStore";
+import { useQuery } from "@tanstack/react-query";
+import { getTodos } from "../../axios/api";
 import { Todo as TodoType } from "../../types/global.d";
 
 type Props = {
@@ -12,12 +9,17 @@ type Props = {
 };
 
 export default function TodoList({ isActive }: Props) {
-  const dispatch = useAppDispatch();
-  const todos = useSelector((state: RootState) => state.todos.todos);
+  const { isPending, isError, data } = useQuery({
+    queryKey: ["todos"],
+    queryFn: getTodos,
+  });
 
-  useEffect(() => {
-    dispatch(__getTodos());
-  }, [dispatch]);
+  if (isPending) {
+    return <p>로딩 중입니다..!</p>;
+  }
+  if (isError) {
+    return <p>오류가 발생했습니다..!</p>;
+  }
 
   return (
     <StyledDiv>
@@ -25,7 +27,7 @@ export default function TodoList({ isActive }: Props) {
         {isActive ? "해야 할 일" : "완료한 일"}
       </StyledTodoListHeader>
       <StyledTodoListBox>
-        {todos
+        {data
           .filter((item: TodoType) => item.isDone === !isActive)
           .map((item: TodoType) => {
             return <Todo key={item.id} todo={item} isActive={isActive} />;

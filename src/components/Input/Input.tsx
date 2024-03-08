@@ -1,14 +1,22 @@
 import { useState } from "react";
 import shortid from "shortid";
 import styled from "styled-components";
-import { __addTodo } from "../../redux/modules/todosSlice";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../redux/config/configStore";
+import { addTodo } from "../../axios/api";
+import { useMutation, QueryClient } from "@tanstack/react-query";
 import LabeledInput from "../common/LabeledInput";
 
 export default function Input() {
-  const dispatch = useAppDispatch();
-  const todos = useSelector((state: RootState) => state.todos);
+  const queryClient = new QueryClient();
+  const addMutation = useMutation({
+    mutationFn: addTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.error("목록 추가 오류", error);
+    },
+  });
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -32,7 +40,8 @@ export default function Input() {
       content,
       isDone: false,
     };
-    dispatch(__addTodo(newTodo));
+    addMutation.mutate(newTodo);
+    // dispatch(__addTodo(newTodo));
     setTitle("");
     setContent("");
   };

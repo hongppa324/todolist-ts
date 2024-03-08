@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { __removeTodo, __switchTodo } from "../../redux/modules/todosSlice";
-import { useAppDispatch } from "../../redux/config/configStore";
+import { removeTodo, switchTodo } from "../../axios/api";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import { Todo } from "../../types/global.d";
 
 type Props = {
@@ -9,27 +9,47 @@ type Props = {
 };
 
 export default function Todo({ todo, isActive }: Props) {
-  const dispatch = useAppDispatch();
+  const queryClient = new QueryClient();
+  const removeMutation = useMutation<void, Error, string>({
+    mutationFn: removeTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.error("목록 제거 오류", error);
+    },
+  });
 
-  const removeHandler =
-    (id: string) => (event: React.MouseEvent<HTMLButtonElement>) => {
-      dispatch(__removeTodo(id));
-    };
+  const switchMutation = useMutation<
+    void,
+    Error,
+    { id: string; isDone: boolean }
+  >({
+    mutationFn: switchTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+    onError: (error) => {
+      console.error("목록 이동 오류", error);
+    },
+  });
 
-  const switchHandler =
-    (id: string, isDone: boolean) =>
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      dispatch(__switchTodo({ id, isDone }));
-    };
+  const removeHandler = (id: string) => {
+    removeMutation.mutate(id);
+  };
+
+  const switchHandler = (id: string, isDone: boolean) => {
+    switchMutation.mutate({ id, isDone });
+  };
 
   return (
     <StyledDiv>
       <StyledTitle>{todo.title}</StyledTitle>
       <StyledContent>{todo.content}</StyledContent>
-      <TodoButton onClick={switchHandler(todo.id, !isActive)}>
+      <TodoButton onClick={() => switchHandler(todo.id, !isActive)}>
         {isActive ? "완료" : "취소"}
       </TodoButton>
-      <TodoButton onClick={removeHandler(todo.id)}>삭제</TodoButton>
+      <TodoButton onClick={() => removeHandler(todo.id)}>삭제</TodoButton>
     </StyledDiv>
   );
 }
