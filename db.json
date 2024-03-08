@@ -1,22 +1,10 @@
 {
   "todos": [
     {
-      "id": "heRSKeOqR",
-      "title": "123",
-      "content": "123",
+      "id": "C4b_ngGd0",
+      "title": "타입스크립트 개인과제",
+      "content": "레벨 5 완료하기",
       "isDone": true
-    },
-    {
-      "id": "1KfrEPf5B",
-      "title": "123",
-      "content": "123",
-      "isDone": true
-    },
-    {
-      "id": "XsDmTEMRy",
-      "title": "123",
-      "content": "123",
-      "isDone": false
     }
   ]
 }

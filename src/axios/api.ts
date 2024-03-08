@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Todo } from "../types/global.d";
 
-const SERVER_URL = "http://localhost:3001";
+const SERVER_URL = "http://localhost:4001";
 
 const getTodos = async (): Promise<Todo[]> => {
   try {

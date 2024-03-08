@@ -2,11 +2,11 @@ import { useState } from "react";
 import shortid from "shortid";
 import styled from "styled-components";
 import { addTodo } from "../../axios/api";
-import { useMutation, QueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import LabeledInput from "../common/LabeledInput";
 
 export default function Input() {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const addMutation = useMutation({
     mutationFn: addTodo,
     onSuccess: () => {
@@ -41,7 +41,6 @@ export default function Input() {
       isDone: false,
     };
     addMutation.mutate(newTodo);
-    // dispatch(__addTodo(newTodo));
     setTitle("");
     setContent("");
   };

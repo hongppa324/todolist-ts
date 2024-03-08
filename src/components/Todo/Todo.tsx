@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { removeTodo, switchTodo } from "../../axios/api";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { Todo } from "../../types/global.d";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function Todo({ todo, isActive }: Props) {
-  const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
   const removeMutation = useMutation<void, Error, string>({
     mutationFn: removeTodo,
     onSuccess: () => {
